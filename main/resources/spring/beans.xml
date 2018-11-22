@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xmlns:cxf="http://cxf.apache.org/core" xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:http="http://cxf.apache.org/transports/http/configuration"
+       xmlns:sec="http://cxf.apache.org/configuration/security"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://cxf.apache.org/transports/http/configuration
+       http://cxf.apache.org/schemas/configuration/http-conf.xsd
+        http://cxf.apache.org/transports/http-jetty/configuration
+        http://cxf.apache.org/schemas/configuration/http-jetty.xsd
+         http://cxf.apache.org/configuration/security
+       http://cxf.apache.org/schemas/configuration/security.xsd
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://cxf.apache.org/jaxrs
+        http://cxf.apache.org/schemas/jaxrs.xsd
+        http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+        http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
+       default-lazy-init="false">
+
+
+    <bean id="locationSimulatorService" class="com.locus.simulator.service.impl.LocationSimulatorServiceImpl">
+        <property name="locationSimulatorManager" ref="locationSimulatorManager"/>
+    </bean>
+
+    <bean id="locationSimulatorManager" class="com.locus.simulator.manager.impl.LocationSimulatorManagerImpl">
+        <property name="calculator" ref="intervalCalculator"/>
+    </bean>
+
+    <bean id="intervalCalculator" class="com.locus.simulator.calculations.IntervalCalculator"/>
+</beans>
