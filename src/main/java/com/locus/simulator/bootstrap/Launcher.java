@@ -27,9 +27,9 @@ public class Launcher {
         // Get LocationSimulatorService bean from context
         LocationSimulatorService locationSimulatorService = (LocationSimulatorService) context.getBean("locationSimulatorService");
 
-        //TODO: Give the values here
-        LatLng src = new LatLng(1, 2);
-        LatLng dest = new LatLng(3, 5);
+        //TODO: Give the values here in degrees
+        LatLng src = new LatLng(49, 50);
+        LatLng dest = new LatLng(68, 99);
 
         // Call LocationSimulatorService to get all the locations present between source and destination
         LocationsResponse locations = locationSimulatorService.getLocations(src, dest);
