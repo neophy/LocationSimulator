@@ -8,6 +8,8 @@ it gives the coordinates at specified interval.
 Run the main app present here: com/locus/simulator/bootstrap/Launcher.java
 
 Give the LatLng of source and destination in the main method:
+
 //TODO: Give the values here in degrees
 LatLng src = new LatLng(49, 50);
+
 LatLng dest = new LatLng(68, 99);
