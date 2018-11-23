@@ -20,7 +20,7 @@ public class IntervalCalculator {
      * @source https://gis.stackexchange.com/questions/157693/getting-all-vertex-lat-long-coordinates-every-1-meter-between-two-known-points
      */
     public List<LatLng> getDesiredLocations(List<LatLng> locations) {
-        List<LatLng> desiredLocations = new ArrayList<>();
+        List<LatLng> desiredLocations = new ArrayList<LatLng>();
         desiredLocations.add(locations.get(0));
 
         for (int i=0; i < locations.size()-1; i++) {

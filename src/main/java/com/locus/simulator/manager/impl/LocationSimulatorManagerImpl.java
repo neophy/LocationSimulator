@@ -48,7 +48,9 @@ public class LocationSimulatorManagerImpl implements LocationSimulatorManager {
         } catch (ApiException e) {
             System.out.println(e);
             throw new LocationSimulatorException("DirectionsApi failure", e.getCause(), LocationSimulatorErrorCodes.GOOGLE_API_ERROR);
-        } catch (InterruptedException| IOException e) {
+        } catch (InterruptedException e) {
+            throw new LocationSimulatorException("DirectionsApi failure", e.getCause(), LocationSimulatorErrorCodes.GOOGLE_API_ERROR);
+        } catch (IOException e) {
             throw new LocationSimulatorException("DirectionsApi failure", e.getCause(), LocationSimulatorErrorCodes.GOOGLE_API_ERROR);
         }
 

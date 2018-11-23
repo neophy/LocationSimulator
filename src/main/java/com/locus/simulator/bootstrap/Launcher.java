@@ -9,13 +9,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Logger;
+
 
 /**
  * @author Neophy
  */
 public class Launcher {
-    private static final Logger LOGGER = Logger.getLogger(Launcher.class.getName());
 
     public static void main(String[] args) {
 
