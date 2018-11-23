@@ -17,11 +17,8 @@ import com.locus.simulator.manager.LocationSimulatorManager;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static java.lang.Math.acos;
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
 
 /**
  * @author Neophy
@@ -31,7 +28,6 @@ public class LocationSimulatorManagerImpl implements LocationSimulatorManager {
 
     private static final String API_KEY = "AIzaSyARB94yftG3b4MFQeEKpqMB6mqywkeYVdw";
     private IntervalCalculator calculator;
-    static double PI_RAD = Math.PI / 180.0;
 
     public List<LatLng> getLocations(LatLng src, LatLng destination) throws LocationSimulatorException {
 
@@ -39,19 +35,21 @@ public class LocationSimulatorManagerImpl implements LocationSimulatorManager {
                 .apiKey(API_KEY)
                 .build();
 
-        DirectionsResult results = null;
+        DirectionsResult results ;
         try {
             results = DirectionsApi.newRequest(context)
                         .origin(src)
                         .destination(destination)
                         .await();
         } catch (ApiException e) {
-            System.out.println(e);
-            throw new LocationSimulatorException("DirectionsApi failure", e.getCause(), LocationSimulatorErrorCodes.GOOGLE_API_ERROR);
+            LOGGER.log(Level.SEVERE, e.getMessage());
+            throw new LocationSimulatorException(e.getMessage(), LocationSimulatorErrorCodes.GOOGLE_API_ERROR);
         } catch (InterruptedException e) {
-            throw new LocationSimulatorException("DirectionsApi failure", e.getCause(), LocationSimulatorErrorCodes.GOOGLE_API_ERROR);
+            LOGGER.log(Level.SEVERE, e.getMessage());
+            throw new LocationSimulatorException(e.getMessage(), LocationSimulatorErrorCodes.GOOGLE_API_ERROR);
         } catch (IOException e) {
-            throw new LocationSimulatorException("DirectionsApi failure", e.getCause(), LocationSimulatorErrorCodes.GOOGLE_API_ERROR);
+            LOGGER.log(Level.SEVERE, e.getMessage());
+            throw new LocationSimulatorException(e.getMessage(), LocationSimulatorErrorCodes.GOOGLE_API_ERROR);
         }
 
         List<LatLng> locations = getLocations(results);
@@ -89,22 +87,5 @@ public class LocationSimulatorManagerImpl implements LocationSimulatorManager {
         this.calculator = calculator;
     }
 
-    private  double greatCircleInMeters(LatLng latLng1, LatLng latLng2) {
-        return greatCircleInKilometers(latLng1.lat, latLng1.lng, latLng2.lng,
-                latLng2.lng) * 1000;
-    }
-
-    /**
-     * Use Great Circle distance formula to calculate distance between 2 coordinates in kilometers.
-     * https://software.intel.com/en-us/blogs/2012/11/25/calculating-geographic-distances-in-location-aware-apps
-     */
-    private double greatCircleInKilometers(double lat1, double long1, double lat2, double long2) {
-        double phi1 = lat1 * PI_RAD;
-        double phi2 = lat2 * PI_RAD;
-        double lam1 = long1 * PI_RAD;
-        double lam2 = long2 * PI_RAD;
-
-        return 6371.01 * acos(sin(phi1) * sin(phi2) + cos(phi1) * cos(phi2) * cos(lam2 - lam1));
-    }
 }
 

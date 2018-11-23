@@ -9,12 +9,16 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
  * @author Neophy
  */
 public class Launcher {
+
+    private static final Logger LOGGER = Logger.getLogger(Launcher.class.getName());
 
     public static void main(String[] args) {
 
@@ -33,6 +37,11 @@ public class Launcher {
 
         // Call LocationSimulatorService to get all the locations present between source and destination
         LocationsResponse locations = locationSimulatorService.getLocations(src, dest);
+        if (locations.getLocations() == null) {
+            LOGGER.log(Level.SEVERE, "No locations found for src: " + src.toString() + " and destination: "
+                    + dest.toString() + ". Error: " + locations.getStatusMessage());
+            System.exit(0);
+        }
         printLocations(locations.getLocations());
     }
 
@@ -56,7 +65,7 @@ public class Launcher {
 
     private static void printLocations(List<LatLng> locations) {
         for (LatLng location:locations) {
-            System.out.println(location);
+            LOGGER.log(Level.INFO, location.toString());
         }
     }
 
